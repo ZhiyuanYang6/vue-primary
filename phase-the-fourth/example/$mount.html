@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>$mount实例</title>
+</head>
+
+<body>
+    <h1>$mount实例</h1>
+    <hr>
+    <div id="app">
+    </div>
+    <p>
+        <button onclick="destroy()">撤销</button>
+    </p>
+    <p>
+        <button onclick="reload()">刷新</button>
+    </p>
+    <p>
+        <button onclick="tick()">更改数据</button>
+    </p>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var ousheng = Vue.extend({
+        template: `<p>{{message}}</p>`,
+        data: function() {
+            return {
+                message: 'Hello,I am Ousheng!',
+            }
+        },
+        mounted: function() {
+            console.log('4-mounted被创建');
+        },
+        destroyed: function() {
+            console.log('10-销毁之后');
+        },
+        updated: function() {
+            console.log('6-updata-更新之后')
+        }
+    })
+    var vm = new ousheng().$mount("#app");
+
+    function destroy() {
+        vm.$destroy();
+    };
+
+    function reload() {
+        vm.$forceUpdate();
+    };
+
+    function tick() {
+        vm.message = "update message info";
+        vm.$nextTick(function() {
+            console.log('message更新完后调用的方法')
+        })
+    }
+    </script>
+</body>
+
+</html>

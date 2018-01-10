@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Early Examples Demo</title>
+</head>
+
+<body>
+    <h1>Early Examples Demo</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery-1.11.3.js"></script>
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello wrold!'
+        },
+        mounted: function() {
+            $('#app').html('我是jQuery');
+        },
+        methods: {
+            add: function() {
+                console.log('调用了构造器内部的ADD方法！');
+            }
+        }
+    })
+    app.add();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Watch实例</title>
+</head>
+
+<body>
+    <h1>Watch实例</h1>
+    <hr>
+    <div id="app">
+        <p>今日温度：{{temperature}}°C</p>
+        <p>穿衣建议：{{suggest}}</p>
+        <p>
+            <button @click="warming">升温</button>
+            <button @click="dropT">降温</button>
+        </p>
+        <input type="file">
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var suggestList = ["T恤短袖", "夹克长裙", "棉衣羽绒服"];
+    var app = new Vue({
+        el: '#app',
+        data: {
+            temperature: 14,
+            suggest: "夹克长裙",
+        },
+        methods: {
+            warming: function() {
+                this.temperature += 5;
+            },
+            dropT: function() {
+                this.temperature -= 5;
+            },
+        },
+        // watch: {
+        //     temperature: function(newVal, oldVal) {
+        //         if (newVal >= 26) {
+        //             this.suggest = suggestList[0];
+        //         } else if (newVal < 26 && newVal >= 0) {
+        //             this.suggest = suggestList[1];
+        //         } else {
+        //             this.suggest = suggestList[2];
+        //         }
+        //     }
+        // }
+    })
+    app.$watch('temperature', function(newVal, oldVal) {
+        if (newVal >= 26) {
+            this.suggest = suggestList[0];
+        } else if (newVal < 26 && newVal >= 0) {
+            this.suggest = suggestList[1];
+        } else {
+            this.suggest = suggestList[2];
+        }
+    })
+    </script>
+</body>
+
+</html>

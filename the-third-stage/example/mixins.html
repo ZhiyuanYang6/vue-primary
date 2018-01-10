@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Mixins 实例</title>
+</head>
+
+<body>
+    <h1>Mixins 实例</h1>
+    <hr>
+    <div id="app">
+        {{num}}
+        <p>
+            <button @click="add2">ADD</button>
+        </p>
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    //额外临时加入时，用于显示日志
+    var addLog = {
+        updated: function() {
+            console.log('数据发生变化，变成了' + this.num + '。');
+        }
+    }
+
+    Vue.mixin({
+        updated: function() {
+            console.log('我是全局的混入');
+        },
+        methods: {
+            add: function() {
+                this.num++;
+                console.log('我是全局的混入的方法');
+            },
+            add2: function() {
+                this.num++;
+                console.log('我是全局的混入的方法2');
+            }
+        }
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            num: 1,
+        },
+        methods: {
+            add: function() {
+                console.log('我是原生的方法s');
+                this.num++
+            }
+        },
+        updated: function() {
+            console.log('我是原生的updated');
+        },
+        mixins: [addLog] //混入
+    })
+    </script>
+</body>
+
+</html>

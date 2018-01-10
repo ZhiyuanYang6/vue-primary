@@ -148,6 +148,102 @@ Vue初级笔记
 	3.native  给组件绑定构造器里的原生事件。：btn @click.native="add(10,$event)"></btn>
 	4.作用域外部调用构造器里的方法：<button onclick="app.add(3)">外部ADD</button>
 
+四、Watch 选项 
+	Watch：监控数据
+	1. watch:{
+                data:function(newVal,oldVal){
+                }
+            }
+	2.用实例属性写watch监控：这样的好处就是降低我们程序的耦合度，使程序变的灵活。
+		app.$watch('data', function(newVal, oldVal) })	
+
+五、Mixins 混入选项操作
+	1.Mixins一般有两种用途：
+		1、在你已经写好了构造器后，需要增加方法或者临时的活动时使用的方法，这时用混入会减少源代码的污染。
+		2、很多地方都会用到的公用方法，用混入的方法可以减少代码量，实现代码重用。
+	2.基本用法：
+    var addLog = {
+        updated: function() {
+            console.log('数据发生变化，变成了' + this.num + '。');
+        }
+    }
+    mixins: [addLog] //混入
+	3.mixins的调用顺序：全局混入 > 混入 > 原生
+	4.全局API混入方式
+    Vue.mixin({
+        updated: function() {
+            console.log('我是全局的混入');
+        }
+    })
+
+六、Extends Option  扩展选项
+	1.通过外部增加对象的形式，对构造器进行扩展。和混入非常的类似。
+	2.基本用法
+	var bbb={
+            created:function(){
+                console.log("我是被扩展出来的");
+            },
+            methods:{
+	/*****拓展的methods内的方法如果重名，是执行构造器里面重名方法，而混入的不执行****/
+                add:function(){
+                    console.log('我是被扩展出来的方法！');
+                }
+            }
+        };
+	extends:bbb
+	3.extends的调用顺序: 全局扩展 > 原生
+
+七、delimiters 选项
+	delimiters的作用是改变我们插值的符号。Vue默认的插值是双大括号{{}}。但有时我们会有需求更改这个插值的形式。
+
+
+/*******第四阶段：Vue实例和内置组件********/
+
+一、实例入门-实例属性
+	概述：实例就是在构造器外部操作构造器内部的属性选项或者方法，就叫做实例？实例的作用就是给原生的或者其他javascript框架一个融合的接口或者说是机会，让Vue和其他框架一起使用。
+	1.Vue和Jquery.js一起使用
+		mounted:function(){
+                	$('#app').html('我是jQuery!');
+            	}
+	2.实例调用自定义方法	methods内的方法在外部调用 app.add();
+
+二、实例方法
+	1.$mount拓展方法：用来挂载我们的扩展的，我们先来复习一下扩展的写法。
+	2.$destroy()卸载方法：用$destroy()进行卸载。
+	3.$forceUpdate() 更新方法
+	4.$forceUpdate() 更新方法
+	5.安装Vue的控制台调试工具。
+
+三、实例事件
+	实例事件就是在构造器外部写一个调用构造器内部的方法。这样写的好处是可以通过这种写法在构造器外部调用构造器内部的数据。
+	1.$on  在构造器外部添加事件。
+app.$on('reduce',function(){
+    console.log('执行了reduce()');
+    this.num--;
+});
+//外部调用内部事件
+function reduce(){
+    app.$emit('reduce');
+}
+	2.$once执行一次的事件：同上
+	3.$off关闭事件
+function off(){
+   app.$off('reduce');
+}
+
+四、内置组件 -slot讲解
+	slot是标签的内容扩展，也就是说你用slot就可以在自定义组件时传递给组件内容，组件接收内容并输出。
+	
+
+
+
+
+
+
+
+
+
+
 
 
 
