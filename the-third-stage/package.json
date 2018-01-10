@@ -1,0 +1,14 @@
+{
+  "name": "the-third-stage",
+  "version": "1.0.0",
+  "description": "vue the third stage",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>v-model数据源绑定实例</title>
+</head>
+
+<body>
+    <h1>v-model数据源绑定实例</h1>
+    <hr>
+    <div id="app">
+        <p>{{message}}测试trim</p>
+        <h3>文本框</h3>
+        <p>v-model:
+            <input type="text" v-model="message"> </p>
+        <p>v-model.lazy:
+            <input type="text" v-model.lazy="message"> </p>
+        <p>v-model.number:
+            <input type="text" v-model.number="message"> </p>
+        <p>v-model.trim:
+            <input type="text" v-model.trim="message"> </p>
+        <hr>
+        <h3>文本域</h3>
+        <textarea name="text1" id="tarea" cols="30" rows="10" v-model="message"></textarea>
+        <hr>
+        <h3>多选框选定一个值</h3>
+        <input type="checkbox" id="isTrue" v-model="isTrue">
+        <label for="isTrue">{{isTrue}}</label>
+        <hr>
+        <h3>多选框选定一个值</h3>
+        <p>
+            <input type="checkbox" id="jsousheng" value="jsousheng" v-model="web_name">
+            <label for="isTrue">jsousheng</label>
+            <input type="checkbox" id="xiaolan" value="xiaolan" v-model="web_name">
+            <label for="isTrue">xiaolan</label>
+            <input type="checkbox" id="xiaohong" value="xiaohong" v-model="web_name">
+            <label for="isTrue">xiaohong</label>
+            <input type="checkbox" id="xiaoming" value="xiaoming" v-model="web_name">
+            <label for="isTrue">xiaoming</label>
+            <input type="checkbox" id="xiaohei" value="xiaohei" v-model="web_name">
+            <label for="isTrue">xiaohei</label>
+        </p>
+        <p>{{web_name}}</p>
+        <hr>
+        <h3>单选框绑定</h3>
+        <p>
+            <input type="radio" id="one" value="男" v-model="sex">
+            <label for="one">男</label>
+            <input type="radio" id="two" value="女" v-model="sex">
+            <label for="one">女</label>
+            <p>你选择的性别是：{{sex}}</p>
+        </p>
+    </div>
+    <script type="text/javascript " src="../assets/js/vue.js "></script>
+    <script type="text/javascript ">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: "Hello World! ",
+            isTrue: true,
+            web_name: [],
+            sex: '男',
+        }
+    })
+    </script>
+</body>
+
+</html>

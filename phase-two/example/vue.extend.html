@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vue.extend扩展构造器实例</title>
+</head>
+
+<body>
+    <h1>Vue.extend扩展构造器实例</h1>
+    <hr>
+    <!-- <author></author> -->
+    <div id="author"></div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var authorExtend = Vue.extend({
+        template: "<p><a :href='authorUrl'>{{authorName}}</a></p>", //模板
+        data: function() {
+            return {
+                authorName: 'baidu',
+                authorUrl: 'https://www.baidu.com',
+            }
+        }
+    });
+    // new authorExtend().$mount('author');
+    new authorExtend().$mount('#author');
+    </script>
+</body>
+
+</html>

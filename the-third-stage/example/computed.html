@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>computed 实例</title>
+</head>
+
+<body>
+    <h1>computed  实例</h1>
+    <hr>
+    <div id="app">
+        <!-- {{newPrice}} -->
+        <p>{{newPrice}}</p>
+        <p>{{price}}</p>
+        <ul>
+            <li v-for="item in reversNews">
+                {{item.title}}-{{item.data}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="item2 in newsList">
+                {{item2.title}}-{{item2.data}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var newList = [
+        { title: '马云：会考虑将阿里巴巴附属公司在香港上市', data: '2017/3/23' },
+        { title: '习近平同法国总统举行会谈 中法联合声明(全文)', data: '2017/3/24' },
+        { title: '中国小朋友用法语应对自如 马克龙却被中文难住了', data: '2017/3/25' },
+        { title: '25家化工厂关闭8%财政收入不要 这座城市要干嘛？', data: '2017/3/28' }
+    ]
+    var app = new Vue({
+        el: '#app',
+        data: {
+            price: 100,
+            message: 'hello wrold!',
+            newsList: newList,
+        },
+        computed: {
+            newPrice: function() {
+                return '￥' + this.price + '元';
+                // this.price = 
+            },
+            reversNews: function() {
+                return this.newsList.reverse();
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

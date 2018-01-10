@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vue.directive 自定义指令</title>
+</head>
+
+<body>
+    <h1>Vue.directive自定义指令</h1>
+    <hr>
+    <div id="app">
+        <p v-ousheng="color">{{num}}</p>
+        <p>
+            <button @click="add">ADD</button>
+        </p>
+        <p>
+            <button onclick="unbind()">解绑</button>
+        </p>
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var unbind = function() {
+        app.$destroy();
+    }
+    Vue.directive('ousheng', {
+        bind: function(el, binding, vnode) { //被绑定
+            console.log(binding)
+            el.style = "color:" + binding.value;
+            console.log('1 - bind');
+        },
+        inserted: function() { //绑定到节点
+            console.log('2 - inserted');
+        },
+        update: function() { //组件更新
+            console.log('3 - update');
+        },
+        componentUpdated: function() { //组件更新完成
+            console.log('4 - componentUpdated');
+        },
+        unbind: function() { //解绑
+            console.log('5 - bind');
+        }
+    });
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            num: 0,
+            color: "red",
+        },
+        methods: {
+            add: function() {
+                this.num++;
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

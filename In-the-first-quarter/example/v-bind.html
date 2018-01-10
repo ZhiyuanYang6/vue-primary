@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>v-bind实例</title>
+</head>
+<style>
+.classA {
+    color: #0FF;
+}
+
+.classB {
+    color: #00f;
+    font-size: 150%;
+}
+</style>
+
+<body>
+    <h1>v-bind实例</h1>
+    <hr>
+    <div id="app">
+        <p><img v-bind:src="imgSrc" alt="1" width="200px"></p>
+        <p><a :href="webUrl" target="_blank">百度</a></p>
+        <div :class="ClassName">1.绑定class</div>
+        <div :class="{classB:isOk}">2.绑定class中的判断</div>
+        <div>
+            <input type="checkbox" id='isOk' v-model="isOk">
+            <label for="isOk">isOk={{isOk}}</label>
+        </div>
+        <div :class="[classA,classB]">3.绑定class中的数组</div>
+        <div :class="isOk?classA:classB">4.绑定class中的三元运算符</div>
+        <hr>
+        <div :style="{color:red,fontSize:font}">5.绑定style</div>
+        <div :style="styleObject">6.对象绑定style</div>
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            imgSrc: 'http://jspang.com/wp-content/uploads/2017/03/vue2-3.jpg',
+            webUrl: 'https://www.baidu.com/?tn=91694651_hao_pg',
+            ClassName: 'classA',
+            isOk: true,
+            classA: "classA",
+            classB: "classB",
+            red: "red",
+            font: "20px",
+            styleObject: {
+                color: "green",
+                fontSize: '20px', //不能写font-size  坑的一匹
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue.set实例</title>
+</head>
+
+<body>
+    <h1>vue.set实例</h1>
+    <hr>
+    <div id="app">
+        {{count}}
+        <!-- <p><button @click>ADD</button></p> -->
+        <ul>
+            <li v-for="item in arr">{{item}}</li>
+        </ul>
+    </div>
+    <p>
+        <button onclick="add()">ADD</button>
+    </p>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var outData = {
+        count: 1,
+        // goods: 'car',
+        arr: ['aaa', 'bbb', 'ccc', 'ddd', 'eee']
+    };
+
+    function add() {
+        // Vue.set(outData, 'count', 2);
+        // app.count++;
+        // app.arr[1] = 'ggg';
+        outData.count++;
+        Vue.set(app.arr, 1, 'ggg');
+    }
+    var app = new Vue({
+        el: '#app',
+        data: outData,
+    })
+    </script>
+</body>
+
+</html>

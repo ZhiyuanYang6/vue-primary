@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vue的生命周期</title>
+</head>
+
+<body>
+    <h1>Vue的生命周期</h1>
+    <hr>
+    <div id="app">
+        <ousheng></ousheng>
+        <panda></panda>
+    </div>
+    <!-- <div id="ppa">
+        <ousheng></ousheng>
+    </div> -->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    Vue.component('ousheng', {
+        template: `<div style="color:red">我是全局的ousheng组件</div>`
+    })
+    var app = new Vue({
+        el: '#app',
+        data: {
+            count: 1,
+        },
+        components: {
+            "panda": {
+                template: `<div style="color:red">我是局部的ousheng组件</div>`
+            }
+        }
+    })
+
+    // var ppa = new Vue({
+    //     el: "#ppa"
+    // })
+    </script>
+</body>
+
+</html>

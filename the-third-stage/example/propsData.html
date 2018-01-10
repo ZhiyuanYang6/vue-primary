@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>propsData Option实例</title>
+</head>
+
+<body>
+    <h1>propsData option实例</h1>
+    <hr>
+    <header></header>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var header_a = Vue.extend({ //构造函数的扩展
+        template: `<p>{{message}}-{{a}}-{{b}}</p>`,
+        data: function() {
+            return {
+                message: "Hello , I am header!",
+            }
+        },
+        props: ['a', 'b'],
+    })
+
+    new header_a({ propsData: { a: 12, b: 34 } }).$mount('header');
+    </script>
+</body>
+
+</html>

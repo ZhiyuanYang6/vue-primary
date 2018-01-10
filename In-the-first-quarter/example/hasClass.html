@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>v-for实例</title>
+    <style>
+    .zzc {
+        position: absolute;
+        top: 95px;
+        background: rgba(246, 246, 246, 0.68);
+        height: 23px;
+        width: 70px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>按钮添加遮罩</h1>
+    <hr>
+    <div id="main">
+        <a href="#">
+            <button>上传图片</button>
+        </a>
+    </div>
+    <button id="btn">加/删遮罩</button>
+    <div id="zzc"></div>
+    <script type="text/javascript">
+    var button = document.getElementById('btn');
+    var div_zzc = document.getElementById('zzc');
+    button.onclick = function() {
+        if (hasClass(div_zzc, 'zzc')) {
+            removeClass(div_zzc, 'zzc')
+        } else {
+            addClass(div_zzc, 'zzc')
+        }
+    }
+
+    function addClass(obj, cls) {
+        var obj_class = obj.className, //获取 class 内容.
+            blank = (obj_class != '') ? ' ' : ''; //判断获取到的 class 是否为空, 如果不为空在前面加个'空格'.
+        added = obj_class + blank + cls; //组合原来的 class 和需要添加的 class.
+        obj.className = added; //替换原来的 class.
+    }
+
+    function removeClass(obj, cls) {
+        var obj_class = ' ' + obj.className + ' '; //获取 class 内容, 并在首尾各加一个空格. ex) 'abc    bcd' -> ' abc    bcd '
+        obj_class = obj_class.replace(/(\s+)/gi, ' '), //将多余的空字符替换成一个空格. ex) ' abc    bcd ' -> ' abc bcd '
+            removed = obj_class.replace(' ' + cls + ' ', ' '); //在原来的 class 替换掉首尾加了空格的 class. ex) ' abc bcd ' -> 'bcd '
+        removed = removed.replace(/(^\s+)|(\s+$)/g, ''); //去掉首尾空格. ex) 'bcd ' -> 'bcd'
+        obj.className = removed; //替换原来的 class.
+    }
+
+    function hasClass(obj, cls) {
+        var obj_class = obj.className, //获取 class 内容.
+            obj_class_lst = obj_class.split(/\s+/); //通过split空字符将cls转换成数组.
+        x = 0;
+        for (x in obj_class_lst) {
+            if (obj_class_lst[x] == cls) { //循环数组, 判断是否包含cls
+                return true;
+            }
+        }
+        return false;
+    }
+    </script>
+</body>
+
+</html>

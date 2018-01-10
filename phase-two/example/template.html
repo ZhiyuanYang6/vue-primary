@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Template三种写法</title>
+</head>
+
+<body>
+    <h1>Template的三种写法</h1>
+    <hr>
+    <div id="app">
+        {{count}}
+        <p>
+            <button @click="add">ADD</button>
+        </p>
+    </div>
+    <template id="dd2">
+        <h2 style="color:red">我是Template标签模板</h2>
+    </template>
+    <script type="x-template" id="dd3">
+        <h2 style="color:red">我是Script标签模板</h2>
+    </script>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            count: 1,
+        },
+        methods: {
+            add: function() {
+                this.count++;
+            }
+        },
+        // template: `
+        //     <h2 style="color:red">我是选项模板</h2>
+        // `
+        // template: "#dd2",
+        template: "#dd3",
+    })
+    </script>
+</body>
+
+</html>

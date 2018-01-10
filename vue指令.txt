@@ -1,0 +1,157 @@
+
+Vue初级笔记
+
+/*******第一阶段：vue指令********/
+
+	v-if： 判断是否加载，可以减轻服务器的压力，在需要时加载。
+	v-show：调整css dispaly属性，可以使客户端操作更加流畅。
+	v-for：v-for指令是循环渲染一组data中的数组，v-for 指令需要以 item in items 形式的特殊语法，items 是源数据数组并且item是数组元素迭代的别名。
+	v-text：由于用{{xxx}}当网速很慢或者javascript出错时，会暴露我们的{{xxx}}。Vue给我们提供的v-text可以解决这个问题的。	
+	v-on：v-on 就是监听事件，可以用v-on指令监听DOM事件来触发一些javascript代码。
+	v-model：v-model指令，我理解为绑定数据源。就是把数据绑定在特定的表单元素上，可以很容易的实现双向数据绑定。
+		.lazy：取代 imput 监听 change 事件。
+		.number：输入字符串转为数字。
+		.trim：输入去掉首尾空格。
+	v-bind：v-bind是处理HTML中的标签属性的，例如<div></div>就是一个标签，<img>也是一个标签，我们绑定<img>上的src进行动态赋值。
+	v-pre：在模板中跳过vue的编译，直接输出原始值。就是在标签中加入v-pre就不会输出vue中的data值了。	
+	v-cloak:在vue渲染完指定的整个DOM后才进行显示。它必须和CSS样式一起使用，
+	v-once:在第一次DOM时进行渲染，渲染完成后视为静态内容，跳出以后的渲染过程
+
+/*******第二阶段：全局API********/
+
+一、Vue.directive 自定义指令
+	1.语法：Vue.directive('name',function(el,binding,vnode){ /****/ });
+		el: 指令所绑定的元素，可以用来直接操作DOM。
+		binding:  一个对象，包含指令的很多信息。
+		vnode: Vue编译生成的虚拟节点。
+	2.自定义指令的生命周期：
+		bind:只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个绑定时执行一次的初始化动作。
+		inserted:被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于document中）。
+		update:被绑定于元素所在的模板更新时调用，而无论绑定值是否变化。通过比较更新前后的绑定值，可以忽略不必要的模板更新。
+		componentUpdated:被绑定元素所在模板完成一次更新周期时调用。
+		unbind:只调用一次，指令与元素解绑时调用。
+
+二、Vue.extend构造器的延伸
+	1.Vue.extend：返回的是一个“扩展实例构造器”,也就是预设了部分选项的Vue实例构造器
+	2.语法：
+		var authorExtend = Vue.extend({
+    			template:"<p>标签</p>",
+    			data:function(){
+    			return{
+          			dataname:'date1',
+          			}
+   			}
+		});
+	new authorExtend().$mount('author');
+
+三、Vue.set全局操作
+	1.Vue.set 的作用就是在构造器外部操作构造器内部的数据、属性或者方法。
+		注：主要用于利用数组下标改变数组值。
+	2.语法：Vue.set(outData,'count',4);
+
+四、vue的生命周期
+	略；
+
+五、Template 制作模版
+	1.直接写在选项里的模板：template:`<h1 style="color:red">我是选项模板</h1>`	
+	2.写在<template>标签里的模板
+		<template id="demo2">
+             		<h2 style="color:red">我是template标签模板</h2>
+    		</template>	
+	3.写在<script>标签里的模板
+		<script type="x-template" id="demo3">
+        		<h2 style="color:red">我是script标签模板</h2>
+    		</script>
+
+六、component组件
+	1.Vue component。其实组件就是制作自定义的标签，这些标签在HTML中是没有的。
+	2.语法：
+	    1、全局定义
+		Vue.component('jspang',{
+           		 template:`<div style="color:red;">全局化注册的jspang标签</div>`
+        	    })
+		
+	    2、局部定义
+		components:{
+                	"panda":{
+                    		template:`<div style="color:red;">局部注册的panda标签</div>`
+                	}
+            	}
+
+七、Component 组件props 属性设置
+	props选项就是设置和获取标签上的属性值的，例如我们有一个自定义的组件<panda></panda>,这时我们想给他加个标签属性写成<panda here=’China’></panda> 意思就是熊猫来自中国，当然这里的China可以换成任何值。定义属性的选项是props。
+	语法：<panda :here="message"></panda> 
+	      props: ['here'],
+	1.定义属性并获取属性值	
+	2.属性中带’-‘的处理方式
+	3.在构造器里向组件中传值
+
+八、Component 父子组件关系
+	在实际开发中我们经常会遇到在一个自定义组件中要使用其他自定义组件，这就需要一个父子组件关系。
+	1.构造器外部写局部注册组件
+	2.父子组件的嵌套
+	语法：
+	var city={
+           template:`<div>Sichuan of China</div>`
+        }
+        var jspang = {
+            template:`<div>
+                         <p> Panda from China!</p>
+                         <city></city>
+  		      </div>`,
+            components:{
+                "city":city
+            }
+        }
+
+	components:{
+                "jspang":jspang
+            }
+
+九、Component 标签
+	<component></component>标签是Vue框架自定义的标签，它的用途就是可以动态绑定我们的组件，根据数据的不同更换不同的组件。
+	1.我们先在构造器外部定义三个不同的组件，分别是componentA,componentB和componentC.
+	2.我们在构造器的components选项里加入这三个组件。
+	3.我们在html里插入component标签，并绑定who数据，根据who的值不同，调用不同的组件。
+
+
+/*******第三阶段：Vue的选项********/
+
+一、propsData Option  全局扩展的数据传递
+	propsData 用在全局扩展时进行传递数据
+	1、在全局扩展里加入props进行接收。propsData:{a:1}
+	2、传递时用propsData进行传递。props:[‘a’]
+	3、用插值的形式写入模板。{{ a }}	
+	总结：propsData在实际开发中我们使用的并不多，我们在后边会学到Vuex的应用，他的作用就是在单页应用中保持状态和数据的。
+
+二、computed Option  计算选项
+	computed 的作用主要是对原数据进行改造输出。改造输出：包括格式的编辑，大小写转换，顺序重排，添加符号……。
+	<p>{{newPrice}}</p>
+	data: {
+            price: 100,
+            message: 'hello wrold!',
+            newsList: newList,
+        },
+	computed: {
+            newPrice: function() {
+                return this.price = '￥' + this.price + '元';
+            },
+            reversNews: function() {
+                return this.newsList.reverse();
+            }
+        }
+	总结：computed 属性是非常有用，在输出数据前可以轻松的改变数据。
+
+三、Methods Option  方法选项
+	1.methods中参数的传递：<button @click="add(10,$event)">ADD</button>
+	2.methods中的$event参数： <button @click="add(10,$event)"></button>
+	3.native  给组件绑定构造器里的原生事件。：btn @click.native="add(10,$event)"></btn>
+	4.作用域外部调用构造器里的方法：<button onclick="app.add(3)">外部ADD</button>
+
+
+
+
+
+
+
+

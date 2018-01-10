@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Vue.component.props自定义组件属性</title>
+</head>
+
+<body>
+    <h1>Vue.component.props自定义组件属性</h1>
+    <hr>
+    <div id="app">
+        <panda :here="message"></panda>
+    </div>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'China',
+        },
+        components: {
+            "panda": {
+                template: `<div style="color:red">Panda from {{here}}</div>`,
+                props: ['here'],
+            }
+        },
+    })
+    </script>
+</body>
+
+</html>
