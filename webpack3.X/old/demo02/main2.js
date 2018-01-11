@@ -1,0 +1,1 @@
+document.write('<h1>Hello world!我是no2</h1>');

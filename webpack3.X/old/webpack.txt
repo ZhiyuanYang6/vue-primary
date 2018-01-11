@@ -1,0 +1,21 @@
+﻿WebPack学习笔记
+
+一、认识WebPack的作用
+    1.前端为什么需要WebPack？
+    JavaScript的复杂度增加和需要一大堆依赖包，还需要解决SCSS，Less……新增样式的扩展写法的编译工作。所以现代化的前端已经完全依赖于WebPack的辅助了。
+    2.什么是WebPack？
+    WebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Sass，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。在3.0出现后，Webpack还肩负起了优化项目的责任。
+    3.安装WebPack
+    npm install -g webpack
+    	运行指令webpack
+    webpack -v  查看webpack版本
+    4.开发环境and生产环境：
+	开发环境：在开发时需要的环境，这里指在开发时需要依赖的包。
+	生产环境：程序开发完成，开始运行后的环境，这里指要使项目运行，所需要的依赖包。
+
+二、webpack的Demo案例
+	1、live-server: 
+	（1）live-server ajax请求内容  （2）浏览器自动更新
+	2、webpack 多入口文件
+	filename: '[name].js'
+	
