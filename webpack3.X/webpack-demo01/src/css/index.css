@@ -1,11 +1,18 @@
 body {
-    /* background-color: red; */
-    color: red;
+    background-color: #00bcd45e;
+    /* color: white; */
     font-size: 20px;
 }
 
+.meiluanyong {
+    background-color: #aaa;
+    color: #ff00ff;
+}
+
 #tupian {
-    background-image: url('../images/001.jpg');
-    width: 1666px;
-    height: 760px;
+    background-image: url('../images/002.jpg');
+    width: 640px;
+    height: 783px;
+    transform: rotate(45deg);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);
 }

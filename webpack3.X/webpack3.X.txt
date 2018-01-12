@@ -1,0 +1,191 @@
+WebPack学习笔记
+
+一、认识WebPack的作用
+    1.前端为什么需要WebPack？
+    JavaScript的复杂度增加和需要一大堆依赖包，还需要解决SCSS，Less……新增样式的扩展写法的编译工作。所以现代化的前端已经完全依赖于WebPack的辅助了。
+    2.什么是WebPack？
+    WebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Sass，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。在3.0出现后，Webpack还肩负起了优化项目的责任。
+    3.安装WebPack
+    npm install -g webpack 全局安装
+    npm install webpack --save -dev  局部安装
+    （--save本地安装 -dev开发环境中安装）
+    	运行指令webpack
+    webpack -v  查看webpack版本
+    4.开发环境and生产环境：
+	开发环境：在开发时需要的环境，这里指在开发时需要依赖的包。
+	生产环境：程序开发完成，开始运行后的环境，这里指要使项目运行，所需要的依赖包。
+
+二、webpack的Demo案例
+	1、live-server: 
+	（1）live-server ajax请求内容  （2）浏览器自动更新
+	2、基本目录结构
+	src文件夹：用来存放我们编写的javascript代码，可以简单的理解为用JavaScript编写的模块。
+	dist文件夹：用来存放供浏览器读取的文件，这个是webpack打包成的文件。
+	3、webpack打包
+	webpack {entry file} {destination for bundled file}
+		{entry file}:入口文件的路径，本文中就是src/entery.js的路径；
+		{destination for bundled file}:填写打包后存放的路径。
+		注意：在命令行中是不需要写{ }的。
+
+三、配置文件：入口和出口
+	webpack.config.js：是webpack的配置文件
+		entry:{//入口文件的配置项
+			'name':'URL'
+		},
+    	output:{//出口文件的配置项
+        path:path.resolve(__dirname,'dist'),//输出的路径，用了Node语法获取dist绝对路径 path需要先引入
+        	filename:'name.js'//输出的文件名称[name].js多文件输出
+    	},
+    	module:{},//模块：例如解读CSS,图片如何转换，压缩
+    	plugins:[],//插件，用于生产模版和各项功能 
+    	devServer:{}//配置webpack开发服务功能
+	 
+第四节  服务和热更新：webpack-dev-server
+	1.安装webpack-dev-server：npm install webpack-dev-server –save-dev
+	2./webpack.config.js配置devServer
+	devServer:{
+        contentBase:path.resolve(__dirname,'dist'),//设置基本目录结构
+        host:'localhost',//服务器的IP地址，可以使用IP也可以使用localhost
+        compress:true,//服务端压缩是否开启
+        port:1717//配置服务端口号
+    }
+    3./package.json配置命令行指令
+    "scripts": {
+    	"server":"webpack-dev-server"
+ 	},
+
+第五节 模块：CSS文件打包
+	1.在js文件中引入css：import css from './css/index.css';
+	2.使用loader来解析CSS文件
+		（1）style.loader  作用：处理css文件中的url()
+		（2）css.loader	   作用：用来将css插入到页面的style标签
+	3.修改webpack.config.js中module属性中的配置
+   module:{
+        rules: [{
+              test: /\.css$/,
+              use: [ 'style-loader', 'css-loader' ]
+            }]
+    },
+
+第六节 插件配置：配置JS压缩
+	1.引入uglifyjs-webpack-glugin插件：const uglify = require('uglifyjs-webpack-plugin');
+	2.引入后使用npm进行安装包。npm install --save-dev uglifyjs-webpack-glugin
+	2.plugins配置：new uglify()
+	3.使用webpack打包
+
+第七节 插件配置：HTML文件的发布
+	1.引入我们的html-webpack-plugin插件。const htmlPlugin= require('html-webpack-plugin');
+	2.引入后使用npm进行安装包。npm install --save-dev html-webpack-plugin
+	3.plugins里进行插件配置
+		new htmlPlugin({
+            minify:{//html文件的压缩配置
+                removeAttributeQuotes:true//去掉属性的双引号
+            },
+            hash:true,//避免缓存JS。
+            template:'./src/index.html'//要打包的html模版路径和文件名称
+           
+        })
+    4.使用webpack打包
+
+第八节 图片迈坑：CSS中的图片处理
+	1.坑1：打包后就找不到图片
+	2.文件中引入图片
+	3.安装模块：file-loader（解决引用路径的问题）和url-loader（减少http请求）
+		npm install --save-dev file-loader url-loader file-loader
+	4.配置url-loader
+		rules: [
+            {
+              test: /\.css$/,
+              use: [ 'style-loader', 'css-loader' ]
+            },{
+               test:/\.(png|jpg|gif)/ ,
+               use:[{
+                   loader:'url-loader',
+                   options:{
+                       limit:500000
+                   }
+               }]
+            }
+          ]
+    注：url-loader封装了file-loader。
+
+第九节 图片迈坑：CSS分离与图片路径处理
+	1.巨坑的一匹：css分离后图片路径错误
+	2.css分离插件：extract-text-webpack-plugin
+	3.插件安装、引入：
+		npm install --save-dev extract-text-webpack-plugin
+		const extractTextPlugin = require("extract-text-webpack-plugin");
+	4.设置Plugins：
+ 		（1）new extractTextPlugin("/css/index.css")
+ 		（2）修改style-loader和css-loader。
+ 				{test: /\.css$/,
+        		use: extractTextPlugin.extract({
+        			fallback: "style-loader",
+        			use: "css-loader")}
+	5.css分离后图片路径问题：
+		1.publicPath：是在webpack.config.js文件的output选项中，主要作用就是处理静态文件路径的。
+		2.配置output：publicPath:'绝对路径'//http//:192.168.1.200:8181
+		注：绝对路径访问速度快于相对路径
+
+第十节 图片迈坑：处理HTML中的图片
+
+
+第十一节 CSS进阶：Less文件的打包和分离
+
+
+第十二节 CSS进阶：SASS文件的打包和分离
+
+
+第十三节 CSS进阶：自动处理CSS3属性前缀
+
+
+第十四节 CSS进阶：消除未使用的CSS
+
+
+第十五节 给webpack增加babel支持
+
+
+第十六节 打包后如何调试
+
+
+第十七节 图片迈坑：处理HTML中的图片
+
+
+第十八节 图片迈坑：处理HTML中的图片
+
+
+第十九节 图片迈坑：处理HTML中的图片
+第十节 图片迈坑：处理HTML中的图片
+第十节 图片迈坑：处理HTML中的图片
+第十节 图片迈坑：处理HTML中的图片
+第十节 图片迈坑：处理HTML中的图片
+第十节 图片迈坑：处理HTML中的图片
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
